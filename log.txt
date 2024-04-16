@@ -1,0 +1,1111 @@
+2024-04-16T14:13:22.036-0500	V6	Executing command	{"cmd": "/usr/bin/docker version --format {{.Client.Version}}"}
+2024-04-16T14:13:22.049-0500	V6	Executing command	{"cmd": "/usr/bin/docker info --format '{{json .MemTotal}}'"}
+2024-04-16T14:13:22.076-0500	V4	Reading release manifest	{"url": "https://anywhere-assets.eks.amazonaws.com/releases/eks-a/manifest.yaml"}
+2024-04-16T14:13:22.232-0500	V4	Reading bundles manifest	{"url": "https://anywhere-assets.eks.amazonaws.com/releases/bundles/63/manifest.yaml"}
+2024-04-16T14:13:22.268-0500	V4	Using CAPI provider versions	{"Core Cluster API": "v1.6.1+fb85251", "Kubeadm Bootstrap": "v1.6.1+c4d67c8", "Kubeadm Control Plane": "v1.6.1+9ea461c", "External etcd Bootstrap": "v1.0.10+7ed7a37", "External etcd Controller": "v1.0.17+352a16c", "Cluster API Provider Docker": "v1.6.1+6275610"}
+2024-04-16T14:13:22.389-0500	V4	Reading release manifest	{"url": "https://anywhere-assets.eks.amazonaws.com/releases/eks-a/manifest.yaml"}
+2024-04-16T14:13:22.444-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:13:22.444-0500	V2	Pulling docker image	{"image": "public.ecr.aws/eks-anywhere/cli-tools:v0.19.3-eks-a-63"}
+2024-04-16T14:13:22.444-0500	V6	Executing command	{"cmd": "/usr/bin/docker pull public.ecr.aws/eks-anywhere/cli-tools:v0.19.3-eks-a-63"}
+2024-04-16T14:13:30.591-0500	V5	Retry execution successful	{"retries": 1, "duration": "8.146855724s"}
+2024-04-16T14:13:30.591-0500	V3	Initializing long running container	{"name": "eksa_1713294802444417587", "image": "public.ecr.aws/eks-anywhere/cli-tools:v0.19.3-eks-a-63"}
+2024-04-16T14:13:30.591-0500	V6	Executing command	{"cmd": "/usr/bin/docker run -d --name eksa_1713294802444417587 --network host -w /home/chj -v /var/run/docker.sock:/var/run/docker.sock -v /home/chj:/home/chj -v /home/chj:/home/chj --entrypoint sleep public.ecr.aws/eks-anywhere/cli-tools:v0.19.3-eks-a-63 infinity"}
+2024-04-16T14:13:30.782-0500	V0	Using the new workflow using the controller for management cluster create
+2024-04-16T14:13:30.783-0500	V4	Task start	{"task_name": "setup-validate"}
+2024-04-16T14:13:30.783-0500	V0	Performing setup and validations
+2024-04-16T14:13:30.783-0500	V0	Warning: The docker infrastructure provider is meant for local development and testing only
+2024-04-16T14:13:30.783-0500	V0	✅ Docker Provider setup is valid
+2024-04-16T14:13:30.783-0500	V0	✅ Validate OS is compatible with registry mirror configuration
+2024-04-16T14:13:30.783-0500	V0	✅ Validate certificate for registry mirror
+2024-04-16T14:13:30.783-0500	V0	✅ Validate authentication for git provider
+2024-04-16T14:13:30.783-0500	V0	✅ Validate cluster's eksaVersion matches EKS-A version
+2024-04-16T14:13:30.783-0500	V4	Task finished	{"task_name": "setup-validate", "duration": "41.199µs"}
+2024-04-16T14:13:30.783-0500	V4	----------------------------------
+2024-04-16T14:13:30.783-0500	V4	Task start	{"task_name": "bootstrap-cluster-init"}
+2024-04-16T14:13:30.783-0500	V0	Creating new bootstrap cluster
+2024-04-16T14:13:30.783-0500	V4	Creating kind cluster	{"name": "mgmt-eks-a-cluster", "kubeconfig": "mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:13:30.783-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kind create cluster --name mgmt-eks-a-cluster --kubeconfig mgmt/generated/mgmt.kind.kubeconfig --image public.ecr.aws/eks-anywhere/kubernetes-sigs/kind/node:v1.29.1-eks-d-1-29-7-eks-a-63 --config mgmt/generated/kind_tmp.yaml"}
+2024-04-16T14:13:54.300-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:13:54.300-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:13:54.368-0500	V9	docker	{"stderr": "Error from server (NotFound): namespaces \"eksa-system\" not found\n"}
+2024-04-16T14:13:54.368-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl create namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:13:54.429-0500	V5	Retry execution successful	{"retries": 1, "duration": "129.427439ms"}
+2024-04-16T14:13:54.429-0500	V4	Task finished	{"task_name": "bootstrap-cluster-init", "duration": "23.646794959s"}
+2024-04-16T14:13:54.429-0500	V4	----------------------------------
+2024-04-16T14:13:54.429-0500	V4	Task start	{"task_name": "update-secrets-create"}
+2024-04-16T14:13:54.429-0500	V4	Task finished	{"task_name": "update-secrets-create", "duration": "5.238µs"}
+2024-04-16T14:13:54.429-0500	V4	----------------------------------
+2024-04-16T14:13:54.429-0500	V4	Task start	{"task_name": "install-capi-components-bootstrap"}
+2024-04-16T14:13:54.429-0500	V0	Provider specific pre-capi-install-setup on bootstrap cluster
+2024-04-16T14:13:54.429-0500	V0	Installing cluster-api providers on bootstrap cluster
+2024-04-16T14:13:54.995-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 clusterctl init --core cluster-api:v1.6.1+fb85251 --bootstrap kubeadm:v1.6.1+c4d67c8 --control-plane kubeadm:v1.6.1+9ea461c --infrastructure docker:v1.6.1+6275610 --config mgmt/generated/clusterctl_tmp.yaml --bootstrap etcdadm-bootstrap:v1.0.10+7ed7a37 --bootstrap etcdadm-controller:v1.0.17+352a16c --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:20.913-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:20.913-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/capi-kubeadm-bootstrap-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n capi-kubeadm-bootstrap-system"}
+2024-04-16T14:14:23.702-0500	V5	Retry execution successful	{"retries": 1, "duration": "2.788959072s"}
+2024-04-16T14:14:23.702-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:23.702-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/capi-kubeadm-control-plane-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n capi-kubeadm-control-plane-system"}
+2024-04-16T14:14:35.751-0500	V5	Retry execution successful	{"retries": 1, "duration": "12.048888715s"}
+2024-04-16T14:14:35.751-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:35.751-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/capi-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n capi-system"}
+2024-04-16T14:14:35.920-0500	V5	Retry execution successful	{"retries": 1, "duration": "168.55888ms"}
+2024-04-16T14:14:35.920-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:35.920-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/cert-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n cert-manager"}
+2024-04-16T14:14:36.092-0500	V5	Retry execution successful	{"retries": 1, "duration": "172.210683ms"}
+2024-04-16T14:14:36.092-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:36.092-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/cert-manager-cainjector --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n cert-manager"}
+2024-04-16T14:14:36.260-0500	V5	Retry execution successful	{"retries": 1, "duration": "167.893081ms"}
+2024-04-16T14:14:36.260-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:36.260-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/cert-manager-webhook --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n cert-manager"}
+2024-04-16T14:14:36.429-0500	V5	Retry execution successful	{"retries": 1, "duration": "169.083547ms"}
+2024-04-16T14:14:36.429-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:36.429-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/etcdadm-controller-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n etcdadm-controller-system"}
+2024-04-16T14:14:36.602-0500	V5	Retry execution successful	{"retries": 1, "duration": "172.649468ms"}
+2024-04-16T14:14:36.602-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:36.602-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/etcdadm-bootstrap-provider-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n etcdadm-bootstrap-provider-system"}
+2024-04-16T14:14:36.775-0500	V5	Retry execution successful	{"retries": 1, "duration": "172.662153ms"}
+2024-04-16T14:14:36.775-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:36.775-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/capd-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n capd-system"}
+2024-04-16T14:14:36.941-0500	V5	Retry execution successful	{"retries": 1, "duration": "166.44923ms"}
+2024-04-16T14:14:36.941-0500	V0	Provider specific post-setup
+2024-04-16T14:14:36.941-0500	V4	Task finished	{"task_name": "install-capi-components-bootstrap", "duration": "42.511764853s"}
+2024-04-16T14:14:36.941-0500	V4	----------------------------------
+2024-04-16T14:14:36.941-0500	V4	Task start	{"task_name": "eksa-components-bootstrap-install"}
+2024-04-16T14:14:36.941-0500	V0	Installing EKS-A custom components on bootstrap cluster
+2024-04-16T14:14:36.941-0500	V0	Installing EKS-D components
+2024-04-16T14:14:36.941-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:37.028-0500	V5	Retry execution successful	{"retries": 1, "duration": "86.930545ms"}
+2024-04-16T14:14:37.028-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:37.028-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:37.445-0500	V5	Retry execution successful	{"retries": 1, "duration": "417.045249ms"}
+2024-04-16T14:14:37.445-0500	V0	Installing EKS-A custom components (CRD and controller)
+2024-04-16T14:14:37.655-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:37.655-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:38.054-0500	V5	Retry execution successful	{"retries": 1, "duration": "399.566449ms"}
+2024-04-16T14:14:38.055-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:38.064-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:38.204-0500	V5	Retry execution successful	{"retries": 1, "duration": "149.271042ms"}
+2024-04-16T14:14:38.204-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:38.205-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:38.618-0500	V5	Retry execution successful	{"retries": 1, "duration": "413.898443ms"}
+2024-04-16T14:14:38.618-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:38.619-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:39.020-0500	V5	Retry execution successful	{"retries": 1, "duration": "401.842325ms"}
+2024-04-16T14:14:39.020-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:39.020-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:39.432-0500	V5	Retry execution successful	{"retries": 1, "duration": "412.435467ms"}
+2024-04-16T14:14:39.432-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:39.432-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:39.840-0500	V5	Retry execution successful	{"retries": 1, "duration": "408.134675ms"}
+2024-04-16T14:14:39.840-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:39.841-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:39.958-0500	V5	Retry execution successful	{"retries": 1, "duration": "117.137894ms"}
+2024-04-16T14:14:39.958-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:39.958-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:40.074-0500	V5	Retry execution successful	{"retries": 1, "duration": "116.829098ms"}
+2024-04-16T14:14:40.074-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:40.075-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:40.191-0500	V5	Retry execution successful	{"retries": 1, "duration": "116.32248ms"}
+2024-04-16T14:14:40.191-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:40.191-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:40.308-0500	V5	Retry execution successful	{"retries": 1, "duration": "117.381946ms"}
+2024-04-16T14:14:40.308-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:40.308-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:40.706-0500	V5	Retry execution successful	{"retries": 1, "duration": "397.691074ms"}
+2024-04-16T14:14:40.706-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:40.707-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:40.823-0500	V5	Retry execution successful	{"retries": 1, "duration": "116.994667ms"}
+2024-04-16T14:14:40.823-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:40.823-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:41.228-0500	V5	Retry execution successful	{"retries": 1, "duration": "405.176432ms"}
+2024-04-16T14:14:41.228-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:41.228-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:41.669-0500	V5	Retry execution successful	{"retries": 1, "duration": "440.220664ms"}
+2024-04-16T14:14:41.669-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:41.669-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:41.787-0500	V5	Retry execution successful	{"retries": 1, "duration": "118.510297ms"}
+2024-04-16T14:14:41.787-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:41.788-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:42.237-0500	V5	Retry execution successful	{"retries": 1, "duration": "450.094274ms"}
+2024-04-16T14:14:42.237-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:42.238-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:42.651-0500	V5	Retry execution successful	{"retries": 1, "duration": "414.071365ms"}
+2024-04-16T14:14:42.651-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:42.652-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:43.086-0500	V5	Retry execution successful	{"retries": 1, "duration": "434.742808ms"}
+2024-04-16T14:14:43.086-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:43.087-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:43.505-0500	V5	Retry execution successful	{"retries": 1, "duration": "418.586195ms"}
+2024-04-16T14:14:43.505-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:43.505-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:43.937-0500	V5	Retry execution successful	{"retries": 1, "duration": "431.991945ms"}
+2024-04-16T14:14:43.937-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:43.938-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:44.352-0500	V5	Retry execution successful	{"retries": 1, "duration": "414.858188ms"}
+2024-04-16T14:14:44.352-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:44.352-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:44.788-0500	V5	Retry execution successful	{"retries": 1, "duration": "436.2614ms"}
+2024-04-16T14:14:44.788-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:44.789-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:44.909-0500	V5	Retry execution successful	{"retries": 1, "duration": "120.683531ms"}
+2024-04-16T14:14:44.909-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:44.909-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:45.031-0500	V5	Retry execution successful	{"retries": 1, "duration": "121.787465ms"}
+2024-04-16T14:14:45.031-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:45.032-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:45.149-0500	V5	Retry execution successful	{"retries": 1, "duration": "118.448106ms"}
+2024-04-16T14:14:45.149-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:45.150-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:45.270-0500	V5	Retry execution successful	{"retries": 1, "duration": "120.857198ms"}
+2024-04-16T14:14:45.270-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:45.271-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:45.699-0500	V5	Retry execution successful	{"retries": 1, "duration": "428.768665ms"}
+2024-04-16T14:14:45.699-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:45.699-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:46.135-0500	V5	Retry execution successful	{"retries": 1, "duration": "435.687813ms"}
+2024-04-16T14:14:46.135-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:46.135-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:46.257-0500	V5	Retry execution successful	{"retries": 1, "duration": "122.557388ms"}
+2024-04-16T14:14:46.257-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:46.258-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:46.382-0500	V5	Retry execution successful	{"retries": 1, "duration": "124.235944ms"}
+2024-04-16T14:14:46.382-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:46.382-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:46.503-0500	V5	Retry execution successful	{"retries": 1, "duration": "120.942391ms"}
+2024-04-16T14:14:46.503-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:46.503-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:46.931-0500	V5	Retry execution successful	{"retries": 1, "duration": "428.573904ms"}
+2024-04-16T14:14:46.931-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:46.933-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:47.380-0500	V5	Retry execution successful	{"retries": 1, "duration": "448.382806ms"}
+2024-04-16T14:14:47.380-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:47.381-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:47.817-0500	V5	Retry execution successful	{"retries": 1, "duration": "437.034964ms"}
+2024-04-16T14:14:47.817-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:47.817-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:48.275-0500	V5	Retry execution successful	{"retries": 1, "duration": "458.345323ms"}
+2024-04-16T14:14:48.275-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:48.277-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:48.719-0500	V5	Retry execution successful	{"retries": 1, "duration": "443.519142ms"}
+2024-04-16T14:14:48.719-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:48.719-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:49.176-0500	V5	Retry execution successful	{"retries": 1, "duration": "456.631927ms"}
+2024-04-16T14:14:49.176-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:49.177-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:49.621-0500	V5	Retry execution successful	{"retries": 1, "duration": "445.743312ms"}
+2024-04-16T14:14:49.621-0500	V5	Retrier:	{"timeout": "30m0s", "backoffFactor": null}
+2024-04-16T14:14:49.621-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl wait --timeout 1800.00s --for=condition=Available deployments/eksa-controller-manager --kubeconfig mgmt/generated/mgmt.kind.kubeconfig -n eksa-system"}
+2024-04-16T14:14:52.787-0500	V5	Retry execution successful	{"retries": 1, "duration": "3.16578481s"}
+2024-04-16T14:14:52.799-0500	V1	Applying Bundles to cluster
+2024-04-16T14:14:52.799-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:52.799-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:53.343-0500	V5	Retry execution successful	{"retries": 1, "duration": "544.129456ms"}
+2024-04-16T14:14:53.343-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get configmap in-place-upgrade -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig --namespace eksa-system"}
+2024-04-16T14:14:53.407-0500	V9	docker	{"stderr": "Error from server (NotFound): configmaps \"in-place-upgrade\" not found\n"}
+2024-04-16T14:14:53.407-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.407-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:53.526-0500	V5	Retry execution successful	{"retries": 1, "duration": "119.183962ms"}
+2024-04-16T14:14:53.527-0500	V1	Applying EKSA Release to cluster
+2024-04-16T14:14:53.527-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.527-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:53.669-0500	V5	Retry execution successful	{"retries": 1, "duration": "142.742074ms"}
+2024-04-16T14:14:53.669-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.696-0500	V5	Retry execution successful	{"retries": 1, "duration": "26.931895ms"}
+2024-04-16T14:14:53.696-0500	V4	Applying eksd manifest to cluster
+2024-04-16T14:14:53.696-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.696-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:53.834-0500	V5	Retry execution successful	{"retries": 1, "duration": "137.458829ms"}
+2024-04-16T14:14:53.834-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.902-0500	V5	Retry execution successful	{"retries": 1, "duration": "67.803147ms"}
+2024-04-16T14:14:53.902-0500	V4	Applying eksd manifest to cluster
+2024-04-16T14:14:53.902-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:53.902-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:54.032-0500	V5	Retry execution successful	{"retries": 1, "duration": "130.293932ms"}
+2024-04-16T14:14:54.032-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.109-0500	V5	Retry execution successful	{"retries": 1, "duration": "76.924476ms"}
+2024-04-16T14:14:54.109-0500	V4	Applying eksd manifest to cluster
+2024-04-16T14:14:54.109-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.109-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:54.241-0500	V5	Retry execution successful	{"retries": 1, "duration": "131.921531ms"}
+2024-04-16T14:14:54.241-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.311-0500	V5	Retry execution successful	{"retries": 1, "duration": "69.477832ms"}
+2024-04-16T14:14:54.311-0500	V4	Applying eksd manifest to cluster
+2024-04-16T14:14:54.311-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.311-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:54.445-0500	V5	Retry execution successful	{"retries": 1, "duration": "133.902536ms"}
+2024-04-16T14:14:54.445-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.516-0500	V5	Retry execution successful	{"retries": 1, "duration": "71.207633ms"}
+2024-04-16T14:14:54.516-0500	V4	Applying eksd manifest to cluster
+2024-04-16T14:14:54.516-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:14:54.516-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --namespace eksa-system --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:14:54.646-0500	V5	Retry execution successful	{"retries": 1, "duration": "129.862138ms"}
+2024-04-16T14:14:54.646-0500	V4	Task finished	{"task_name": "eksa-components-bootstrap-install", "duration": "17.704863369s"}
+2024-04-16T14:14:54.646-0500	V4	----------------------------------
+2024-04-16T14:14:54.646-0500	V4	Task start	{"task_name": "workload-cluster-init"}
+2024-04-16T14:14:54.646-0500	V0	Creating new workload cluster
+2024-04-16T14:14:54.646-0500	V3	Applying cluster spec
+2024-04-16T14:14:54.646-0500	V5	Retrier:	{"timeout": "2m0s", "backoffFactor": null}
+2024-04-16T14:14:54.646-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig --field-manager eks-a-cli --server-side --force-conflicts"}
+2024-04-16T14:14:54.771-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig --field-manager eks-a-cli --server-side --force-conflicts"}
+2024-04-16T14:14:54.894-0500	V5	Retry execution successful	{"retries": 1, "duration": "248.239733ms"}
+2024-04-16T14:14:54.894-0500	V5	Retrier:	{"timeout": "10m0s", "backoffFactor": null}
+2024-04-16T14:14:54.894-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:14:54.957-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 0}
+2024-04-16T14:14:54.958-0500	V5	Error happened during retry	{"error": "cluster generation (1) and observedGeneration (0) differ", "retries": 1}
+2024-04-16T14:14:54.958-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:14:55.958-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:14:56.027-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:14:56.027-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 1/20 times", "retries": 2}
+2024-04-16T14:14:56.027-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:14:57.027-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:14:57.095-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:14:57.095-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 2/20 times", "retries": 3}
+2024-04-16T14:14:57.095-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:14:58.095-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:14:58.159-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:14:58.159-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 3/20 times", "retries": 4}
+2024-04-16T14:14:58.159-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:14:59.159-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:14:59.224-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:14:59.224-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 4/20 times", "retries": 5}
+2024-04-16T14:14:59.224-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:00.224-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:01.554-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:01.554-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 5/20 times", "retries": 6}
+2024-04-16T14:15:01.554-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:02.555-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:02.617-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:02.617-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 6/20 times", "retries": 7}
+2024-04-16T14:15:02.617-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:03.618-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:03.682-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:03.682-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 7/20 times", "retries": 8}
+2024-04-16T14:15:03.682-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:04.682-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:04.748-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:04.748-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 8/20 times", "retries": 9}
+2024-04-16T14:15:04.748-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:05.749-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:05.818-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:05.818-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 9/20 times", "retries": 10}
+2024-04-16T14:15:05.818-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:06.818-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:06.886-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:06.886-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 10/20 times", "retries": 11}
+2024-04-16T14:15:06.886-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:07.886-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:07.951-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:07.951-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 11/20 times", "retries": 12}
+2024-04-16T14:15:07.951-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:08.952-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:09.027-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:09.027-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 12/20 times", "retries": 13}
+2024-04-16T14:15:09.027-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:10.027-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:10.094-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:10.094-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 13/20 times", "retries": 14}
+2024-04-16T14:15:10.094-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:11.095-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:11.164-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:11.164-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 14/20 times", "retries": 15}
+2024-04-16T14:15:11.164-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:12.165-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:12.241-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:12.241-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 15/20 times", "retries": 16}
+2024-04-16T14:15:12.241-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:13.242-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:13.306-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:13.306-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 16/20 times", "retries": 17}
+2024-04-16T14:15:13.306-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:14.306-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:14.372-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:14.373-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 17/20 times", "retries": 18}
+2024-04-16T14:15:14.373-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:15.373-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:15.448-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:15.448-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 18/20 times", "retries": 19}
+2024-04-16T14:15:15.448-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:16.449-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:16.517-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:16.517-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 19/20 times", "retries": 20}
+2024-04-16T14:15:16.517-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:17.517-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:17.585-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:17.585-0500	V5	Retry execution successful	{"retries": 21, "duration": "22.69104861s"}
+2024-04-16T14:15:17.585-0500	V3	Waiting for control plane to be ready
+2024-04-16T14:15:17.585-0500	V5	Retrier:	{"timeout": "59m59.999999865s", "backoffFactor": null}
+2024-04-16T14:15:17.585-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:17.649-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:17.649-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 1}
+2024-04-16T14:15:17.649-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:18.650-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:18.720-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:18.720-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 2}
+2024-04-16T14:15:18.720-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:19.720-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:19.790-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:19.790-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 3}
+2024-04-16T14:15:19.790-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:20.790-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:20.862-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:20.862-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 4}
+2024-04-16T14:15:20.862-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:21.863-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:21.929-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:21.929-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 5}
+2024-04-16T14:15:21.929-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:22.929-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:23.001-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:23.001-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 6}
+2024-04-16T14:15:23.001-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:24.001-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:24.070-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:24.070-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 7}
+2024-04-16T14:15:24.070-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:25.071-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:25.137-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:25.137-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 8}
+2024-04-16T14:15:25.137-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:26.138-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:26.212-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:26.212-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 9}
+2024-04-16T14:15:26.212-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:27.213-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:27.282-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:27.282-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 10}
+2024-04-16T14:15:27.282-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:28.283-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:28.356-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:28.356-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 11}
+2024-04-16T14:15:28.356-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:29.357-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:29.426-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:29.426-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Etcd is not ready", "retries": 12}
+2024-04-16T14:15:29.426-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:30.427-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:30.501-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:30.501-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: ", "retries": 13}
+2024-04-16T14:15:30.501-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:31.501-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:31.567-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:31.567-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: ", "retries": 14}
+2024-04-16T14:15:31.567-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:32.568-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:32.636-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:32.636-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: ", "retries": 15}
+2024-04-16T14:15:32.636-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:33.636-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:33.704-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:33.704-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: ", "retries": 16}
+2024-04-16T14:15:33.704-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:34.704-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:34.777-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:34.777-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: ", "retries": 17}
+2024-04-16T14:15:34.777-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:35.777-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:35.843-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:35.843-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 18}
+2024-04-16T14:15:35.843-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:36.844-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:36.921-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:36.921-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 19}
+2024-04-16T14:15:36.921-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:37.922-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:37.990-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:37.990-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 20}
+2024-04-16T14:15:37.990-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:38.992-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:39.061-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:39.061-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 21}
+2024-04-16T14:15:39.061-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:40.061-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:40.130-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:40.130-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 22}
+2024-04-16T14:15:40.130-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:41.130-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:41.198-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:41.198-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 23}
+2024-04-16T14:15:41.198-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:42.199-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:42.273-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:42.273-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 24}
+2024-04-16T14:15:42.273-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:43.273-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:43.337-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:43.337-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 25}
+2024-04-16T14:15:43.337-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:44.338-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:44.409-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:44.410-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 26}
+2024-04-16T14:15:44.410-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:45.410-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:45.476-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:45.476-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 27}
+2024-04-16T14:15:45.476-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:46.476-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:46.540-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:46.540-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 28}
+2024-04-16T14:15:46.540-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:47.540-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:47.605-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:47.605-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 29}
+2024-04-16T14:15:47.605-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:48.605-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:48.673-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:48.673-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 30}
+2024-04-16T14:15:48.673-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:49.673-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:49.741-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:49.741-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 31}
+2024-04-16T14:15:49.741-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:50.741-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:50.809-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:50.809-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 32}
+2024-04-16T14:15:50.809-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:51.810-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:51.877-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:51.878-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 33}
+2024-04-16T14:15:51.878-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:52.878-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:52.942-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:52.942-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 34}
+2024-04-16T14:15:52.942-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:53.942-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:54.007-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:54.007-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 35}
+2024-04-16T14:15:54.007-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:55.008-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:55.076-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:55.076-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 36}
+2024-04-16T14:15:55.076-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:56.076-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:56.142-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:56.142-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 37}
+2024-04-16T14:15:56.142-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:57.143-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:57.207-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:57.207-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 38}
+2024-04-16T14:15:57.207-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:58.207-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:58.276-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:58.276-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 39}
+2024-04-16T14:15:58.276-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:15:59.276-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:15:59.343-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:15:59.343-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 40}
+2024-04-16T14:15:59.343-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:00.344-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:00.416-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:00.416-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 41}
+2024-04-16T14:16:00.416-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:01.416-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:01.493-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:01.493-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 42}
+2024-04-16T14:16:01.493-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:02.494-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:02.564-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:02.564-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 43}
+2024-04-16T14:16:02.564-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:03.565-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:03.631-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:03.631-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 44}
+2024-04-16T14:16:03.631-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:04.631-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:04.699-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:04.699-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: The first control plane instance is not available yet", "retries": 45}
+2024-04-16T14:16:04.699-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:05.700-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:05.767-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:05.767-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 46}
+2024-04-16T14:16:05.767-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:06.767-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:06.834-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:06.834-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 47}
+2024-04-16T14:16:06.834-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:07.835-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:07.916-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:07.916-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 48}
+2024-04-16T14:16:07.916-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:08.916-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:08.983-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:08.984-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 49}
+2024-04-16T14:16:08.984-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:09.984-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:10.055-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:10.055-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 50}
+2024-04-16T14:16:10.055-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:11.056-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:11.123-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:11.123-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 51}
+2024-04-16T14:16:11.123-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:12.123-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:12.190-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:12.190-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 52}
+2024-04-16T14:16:12.190-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:13.190-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:13.263-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:13.263-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 53}
+2024-04-16T14:16:13.263-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:14.264-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:14.333-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:14.333-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 54}
+2024-04-16T14:16:14.333-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:15.333-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:15.405-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:15.405-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 55}
+2024-04-16T14:16:15.405-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:16.406-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:16.477-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:16.477-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 56}
+2024-04-16T14:16:16.477-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:17.477-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:17.546-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:17.546-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 57}
+2024-04-16T14:16:17.546-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:18.546-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:18.616-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:18.616-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 58}
+2024-04-16T14:16:18.616-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:19.616-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:19.680-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:19.680-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 59}
+2024-04-16T14:16:19.680-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:20.680-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:20.746-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:20.746-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 60}
+2024-04-16T14:16:20.746-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:21.747-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:21.811-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:21.811-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 61}
+2024-04-16T14:16:21.811-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:22.811-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:22.884-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:22.884-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 62}
+2024-04-16T14:16:22.884-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:23.885-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:23.952-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:23.952-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 63}
+2024-04-16T14:16:23.952-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:24.953-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:25.024-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:25.024-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 64}
+2024-04-16T14:16:25.024-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:26.025-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:26.088-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:26.088-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 65}
+2024-04-16T14:16:26.088-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:27.088-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:27.161-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:27.161-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 66}
+2024-04-16T14:16:27.161-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:28.161-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:28.227-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:28.227-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 67}
+2024-04-16T14:16:28.227-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:29.228-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:29.298-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:29.298-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 68}
+2024-04-16T14:16:29.298-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:30.298-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:30.363-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:30.363-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 69}
+2024-04-16T14:16:30.363-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:31.363-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:31.436-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:31.436-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 70}
+2024-04-16T14:16:31.436-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:32.436-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:32.523-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:32.523-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 71}
+2024-04-16T14:16:32.523-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:33.524-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:33.592-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:33.592-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 72}
+2024-04-16T14:16:33.592-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:34.592-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:34.663-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:34.663-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 73}
+2024-04-16T14:16:34.663-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:35.663-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:35.729-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:35.729-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 74}
+2024-04-16T14:16:35.729-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:36.729-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:36.802-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:36.802-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 75}
+2024-04-16T14:16:36.802-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:37.802-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:37.874-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:37.874-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 76}
+2024-04-16T14:16:37.874-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:38.875-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:38.951-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:38.951-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 77}
+2024-04-16T14:16:38.951-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:39.951-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:40.042-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:40.042-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 78}
+2024-04-16T14:16:40.042-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:41.042-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:41.114-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:41.114-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 79}
+2024-04-16T14:16:41.114-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:42.115-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:42.196-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:42.196-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 80}
+2024-04-16T14:16:42.196-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:43.196-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:43.278-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:43.278-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 81}
+2024-04-16T14:16:43.278-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:44.279-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:44.357-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:44.357-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 82}
+2024-04-16T14:16:44.357-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:45.358-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:45.427-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:45.427-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 83}
+2024-04-16T14:16:45.427-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:46.427-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:46.501-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:46.501-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 84}
+2024-04-16T14:16:46.501-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:47.502-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:47.574-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:47.574-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 85}
+2024-04-16T14:16:47.574-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:48.575-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:48.654-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:48.654-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 86}
+2024-04-16T14:16:48.654-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:49.655-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:49.726-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:49.726-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 87}
+2024-04-16T14:16:49.726-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:50.727-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:50.793-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:50.793-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 88}
+2024-04-16T14:16:50.793-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:51.793-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:51.866-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:51.866-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 89}
+2024-04-16T14:16:51.866-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:52.866-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:52.933-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:52.933-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 90}
+2024-04-16T14:16:52.933-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:53.933-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:54.002-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:54.002-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 91}
+2024-04-16T14:16:54.002-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:55.002-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:55.069-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:55.069-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 92}
+2024-04-16T14:16:55.069-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:56.069-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:56.136-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:56.136-0500	V5	Error happened during retry	{"error": "cluster condition ControlPlaneReady is False: Control plane nodes not ready yet, 1 expected (0 ready)", "retries": 93}
+2024-04-16T14:16:56.136-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:57.136-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:57.202-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:57.202-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 1/20 times", "retries": 94}
+2024-04-16T14:16:57.202-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:58.203-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:58.277-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:58.277-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 2/20 times", "retries": 95}
+2024-04-16T14:16:58.277-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:16:59.278-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:16:59.348-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:16:59.348-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 3/20 times", "retries": 96}
+2024-04-16T14:16:59.348-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:00.349-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:00.422-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:00.422-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 4/20 times", "retries": 97}
+2024-04-16T14:17:00.422-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:01.422-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:01.492-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:01.492-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 5/20 times", "retries": 98}
+2024-04-16T14:17:01.492-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:02.492-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:02.560-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:02.560-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 6/20 times", "retries": 99}
+2024-04-16T14:17:02.560-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:03.561-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:03.629-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:03.629-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 7/20 times", "retries": 100}
+2024-04-16T14:17:03.629-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:04.629-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:04.693-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:04.693-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 8/20 times", "retries": 101}
+2024-04-16T14:17:04.693-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:05.693-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:05.764-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:05.764-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 9/20 times", "retries": 102}
+2024-04-16T14:17:05.764-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:06.764-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:06.831-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:06.831-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 10/20 times", "retries": 103}
+2024-04-16T14:17:06.831-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:07.831-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:07.898-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:07.898-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 11/20 times", "retries": 104}
+2024-04-16T14:17:07.898-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:08.898-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:08.963-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:08.963-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 12/20 times", "retries": 105}
+2024-04-16T14:17:08.963-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:09.964-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:10.032-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:10.032-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 13/20 times", "retries": 106}
+2024-04-16T14:17:10.032-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:11.033-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:11.101-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:11.101-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 14/20 times", "retries": 107}
+2024-04-16T14:17:11.101-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:12.102-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:12.172-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:12.172-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 15/20 times", "retries": 108}
+2024-04-16T14:17:12.172-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:13.172-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:13.238-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:13.238-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 16/20 times", "retries": 109}
+2024-04-16T14:17:13.238-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:14.238-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:14.318-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:14.318-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 17/20 times", "retries": 110}
+2024-04-16T14:17:14.318-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:15.318-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:15.384-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:15.384-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 18/20 times", "retries": 111}
+2024-04-16T14:17:15.384-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:16.385-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:16.451-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:16.451-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 19/20 times", "retries": 112}
+2024-04-16T14:17:16.451-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:17.452-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:17.522-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:17.522-0500	V5	Retry execution successful	{"retries": 113, "duration": "1m59.936202118s"}
+2024-04-16T14:17:17.522-0500	V3	Waiting for default CNI to be updated
+2024-04-16T14:17:17.522-0500	V5	Retrier:	{"timeout": "57m37.372726511s", "backoffFactor": null}
+2024-04-16T14:17:17.522-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:17.585-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:17.585-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 1/20 times", "retries": 1}
+2024-04-16T14:17:17.585-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:18.586-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:18.651-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:18.651-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 2/20 times", "retries": 2}
+2024-04-16T14:17:18.651-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:19.652-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:19.719-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:19.719-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 3/20 times", "retries": 3}
+2024-04-16T14:17:19.719-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:20.719-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:20.789-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:20.789-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 4/20 times", "retries": 4}
+2024-04-16T14:17:20.789-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:21.789-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:21.865-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:21.866-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 5/20 times", "retries": 5}
+2024-04-16T14:17:21.866-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:22.866-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:22.939-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:22.939-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 6/20 times", "retries": 6}
+2024-04-16T14:17:22.939-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:23.940-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:24.009-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:24.009-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 7/20 times", "retries": 7}
+2024-04-16T14:17:24.009-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:25.010-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:25.080-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:25.080-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 8/20 times", "retries": 8}
+2024-04-16T14:17:25.080-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:26.081-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:26.149-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:26.149-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 9/20 times", "retries": 9}
+2024-04-16T14:17:26.149-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:27.149-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:27.217-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:27.217-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 10/20 times", "retries": 10}
+2024-04-16T14:17:27.217-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:28.217-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:28.287-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:28.287-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 11/20 times", "retries": 11}
+2024-04-16T14:17:28.287-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:29.288-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:29.361-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:29.361-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 12/20 times", "retries": 12}
+2024-04-16T14:17:29.361-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:30.361-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:30.430-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:30.430-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 13/20 times", "retries": 13}
+2024-04-16T14:17:30.430-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:31.431-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:31.499-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:31.499-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 14/20 times", "retries": 14}
+2024-04-16T14:17:31.499-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:32.501-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:32.567-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:32.567-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 15/20 times", "retries": 15}
+2024-04-16T14:17:32.567-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:33.568-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:33.639-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:33.639-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 16/20 times", "retries": 16}
+2024-04-16T14:17:33.639-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:34.639-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:34.707-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:34.707-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 17/20 times", "retries": 17}
+2024-04-16T14:17:34.707-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:35.708-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:35.773-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:35.773-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 18/20 times", "retries": 18}
+2024-04-16T14:17:35.773-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:36.774-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:36.840-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:36.840-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 19/20 times", "retries": 19}
+2024-04-16T14:17:36.840-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:37.841-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:37.908-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:37.908-0500	V5	Retry execution successful	{"retries": 20, "duration": "20.38676384s"}
+2024-04-16T14:17:37.908-0500	V3	Waiting for worker nodes to be ready
+2024-04-16T14:17:37.908-0500	V5	Retrier:	{"timeout": "57m16.985951836s", "backoffFactor": null}
+2024-04-16T14:17:37.908-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:37.973-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:37.973-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 1/20 times", "retries": 1}
+2024-04-16T14:17:37.973-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:38.973-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:39.039-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:39.039-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 2/20 times", "retries": 2}
+2024-04-16T14:17:39.039-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:40.039-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:40.109-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:40.109-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 3/20 times", "retries": 3}
+2024-04-16T14:17:40.109-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:41.109-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:41.178-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:41.178-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 4/20 times", "retries": 4}
+2024-04-16T14:17:41.178-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:42.179-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:42.257-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:42.257-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 5/20 times", "retries": 5}
+2024-04-16T14:17:42.257-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:43.257-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:43.324-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:43.324-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 6/20 times", "retries": 6}
+2024-04-16T14:17:43.324-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:44.325-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:44.389-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:44.389-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 7/20 times", "retries": 7}
+2024-04-16T14:17:44.389-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:45.389-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:45.456-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:45.456-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 8/20 times", "retries": 8}
+2024-04-16T14:17:45.456-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:46.456-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:46.531-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:46.531-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 9/20 times", "retries": 9}
+2024-04-16T14:17:46.531-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:47.531-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:47.601-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:47.601-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 10/20 times", "retries": 10}
+2024-04-16T14:17:47.601-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:48.601-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:48.677-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:48.677-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 11/20 times", "retries": 11}
+2024-04-16T14:17:48.677-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:49.677-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:49.743-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:49.743-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 12/20 times", "retries": 12}
+2024-04-16T14:17:49.743-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:50.744-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:50.810-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:50.810-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 13/20 times", "retries": 13}
+2024-04-16T14:17:50.810-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:51.810-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:51.889-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:51.889-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 14/20 times", "retries": 14}
+2024-04-16T14:17:51.889-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:52.889-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:52.960-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:52.960-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 15/20 times", "retries": 15}
+2024-04-16T14:17:52.960-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:53.961-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:54.024-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:54.024-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 16/20 times", "retries": 16}
+2024-04-16T14:17:54.024-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:55.025-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:55.091-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:55.091-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 17/20 times", "retries": 17}
+2024-04-16T14:17:55.091-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:56.092-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:56.167-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:56.167-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 18/20 times", "retries": 18}
+2024-04-16T14:17:56.167-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:57.168-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:57.235-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:57.235-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 19/20 times", "retries": 19}
+2024-04-16T14:17:57.235-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:58.236-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:58.308-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:58.308-0500	V5	Retry execution successful	{"retries": 20, "duration": "20.399700894s"}
+2024-04-16T14:17:58.308-0500	V3	Waiting for cluster changes to be completed
+2024-04-16T14:17:58.308-0500	V5	Retrier:	{"timeout": "56m56.586240827s", "backoffFactor": null}
+2024-04-16T14:17:58.308-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:58.372-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:58.372-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 1/20 times", "retries": 1}
+2024-04-16T14:17:58.372-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:17:59.372-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:17:59.444-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:17:59.444-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 2/20 times", "retries": 2}
+2024-04-16T14:17:59.444-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:00.445-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:00.511-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:00.511-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 3/20 times", "retries": 3}
+2024-04-16T14:18:00.511-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:01.512-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:01.583-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:01.583-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 4/20 times", "retries": 4}
+2024-04-16T14:18:01.583-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:02.584-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:02.648-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:02.648-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 5/20 times", "retries": 5}
+2024-04-16T14:18:02.648-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:03.649-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:03.720-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:03.720-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 6/20 times", "retries": 6}
+2024-04-16T14:18:03.720-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:04.720-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:04.786-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:04.786-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 7/20 times", "retries": 7}
+2024-04-16T14:18:04.786-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:05.786-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:05.877-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:05.877-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 8/20 times", "retries": 8}
+2024-04-16T14:18:05.877-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:06.877-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:06.944-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:06.944-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 9/20 times", "retries": 9}
+2024-04-16T14:18:06.944-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:07.944-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:08.016-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:08.016-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 10/20 times", "retries": 10}
+2024-04-16T14:18:08.016-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:09.017-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:09.086-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:09.086-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 11/20 times", "retries": 11}
+2024-04-16T14:18:09.086-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:10.086-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:10.157-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:10.157-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 12/20 times", "retries": 12}
+2024-04-16T14:18:10.157-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:11.158-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:11.227-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:11.227-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 13/20 times", "retries": 13}
+2024-04-16T14:18:11.227-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:12.227-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:12.295-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:12.295-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 14/20 times", "retries": 14}
+2024-04-16T14:18:12.295-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:13.296-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:13.359-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:13.359-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 15/20 times", "retries": 15}
+2024-04-16T14:18:13.359-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:14.359-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:14.428-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:14.428-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 16/20 times", "retries": 16}
+2024-04-16T14:18:14.428-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:15.428-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:15.495-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:15.496-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 17/20 times", "retries": 17}
+2024-04-16T14:18:15.496-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:16.497-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:16.573-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:16.573-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 18/20 times", "retries": 18}
+2024-04-16T14:18:16.573-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:17.573-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:17.641-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:17.641-0500	V5	Error happened during retry	{"error": "cluster has reached to expected condition in 19/20 times", "retries": 19}
+2024-04-16T14:18:17.641-0500	V5	Sleeping before next retry	{"time": "1s"}
+2024-04-16T14:18:18.642-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Cluster.v1alpha1.anywhere.eks.amazonaws.com --namespace default mgmt"}
+2024-04-16T14:18:18.708-0500	V9	Cluster generation and observedGeneration	{"Generation": 1, "ObservedGeneration": 1}
+2024-04-16T14:18:18.708-0500	V5	Retry execution successful	{"retries": 20, "duration": "20.400143046s"}
+2024-04-16T14:18:18.708-0500	V5	Retrier:	{"timeout": "1m0s", "backoffFactor": null}
+2024-04-16T14:18:18.708-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get --ignore-not-found -o json --kubeconfig mgmt/generated/mgmt.kind.kubeconfig Secret --namespace eksa-system mgmt-kubeconfig"}
+2024-04-16T14:18:18.774-0500	V5	Retry execution successful	{"retries": 1, "duration": "65.792723ms"}
+2024-04-16T14:18:18.774-0500	V6	Executing command	{"cmd": "/usr/bin/docker port mgmt-lb 6443/tcp"}
+2024-04-16T14:18:18.783-0500	V0	Creating EKS-A namespace
+2024-04-16T14:18:18.783-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl get namespace eksa-system --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:18:18.853-0500	V9	docker	{"stderr": "Error from server (NotFound): namespaces \"eksa-system\" not found\n"}
+2024-04-16T14:18:18.853-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl create namespace eksa-system --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:18:18.916-0500	V0	Installing cluster-api providers on workload cluster
+2024-04-16T14:18:20.984-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 clusterctl init --core cluster-api:v1.6.1+fb85251 --bootstrap kubeadm:v1.6.1+c4d67c8 --control-plane kubeadm:v1.6.1+9ea461c --infrastructure docker:v1.6.1+6275610 --config mgmt/generated/clusterctl_tmp.yaml --bootstrap etcdadm-bootstrap:v1.0.10+7ed7a37 --bootstrap etcdadm-controller:v1.0.17+352a16c --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:21.819-0500	V9	docker	{"stderr": "Fetching providers\nUsing Override=\"core-components.yaml\" Provider=\"cluster-api\" Version=\"v1.6.1+fb85251\"\nUsing Override=\"bootstrap-components.yaml\" Provider=\"bootstrap-kubeadm\" Version=\"v1.6.1+c4d67c8\"\nUsing Override=\"bootstrap-components.yaml\" Provider=\"bootstrap-etcdadm-bootstrap\" Version=\"v1.0.10+7ed7a37\"\nUsing Override=\"bootstrap-components.yaml\" Provider=\"bootstrap-etcdadm-controller\" Version=\"v1.0.17+352a16c\"\nUsing Override=\"control-plane-components.yaml\" Provider=\"control-plane-kubeadm\" Version=\"v1.6.1+9ea461c\"\nUsing Override=\"infrastructure-components-development.yaml\" Provider=\"infrastructure-docker\" Version=\"v1.6.1+6275610\"\nInstalling cert-manager Version=\"v1.13.2+5862714\"\nUsing Override=\"cert-manager.yaml\" Provider=\"cert-manager\" Version=\"v1.13.2+5862714\"\nWaiting for cert-manager to be available...\nError: context deadline exceeded\n"}
+2024-04-16T14:48:21.819-0500	V4	Task finished	{"task_name": "workload-cluster-init", "duration": "33m27.173257249s"}
+2024-04-16T14:48:21.819-0500	V4	----------------------------------
+2024-04-16T14:48:21.819-0500	V4	Task start	{"task_name": "collect-cluster-diagnostics"}
+2024-04-16T14:48:21.819-0500	V0	collecting cluster diagnostics
+2024-04-16T14:48:21.819-0500	V0	collecting management cluster diagnostics
+2024-04-16T14:48:21.826-0500	V3	bundle config written	{"path": "mgmt/generated/bootstrap-cluster-2024-04-16T14:48:21-05:00-bundle.yaml"}
+2024-04-16T14:48:21.826-0500	V1	creating temporary namespace for diagnostic collector	{"namespace": "eksa-diagnostics"}
+2024-04-16T14:48:21.826-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:21.826-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl create namespace eksa-diagnostics --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:48:21.897-0500	V5	Retry execution successful	{"retries": 1, "duration": "71.403573ms"}
+2024-04-16T14:48:21.898-0500	V1	creating temporary ClusterRole and RoleBinding for diagnostic collector
+2024-04-16T14:48:21.898-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:21.898-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:48:22.028-0500	V5	Retry execution successful	{"retries": 1, "duration": "130.965475ms"}
+2024-04-16T14:48:22.029-0500	V0	⏳ Collecting support bundle from cluster, this can take a while	{"cluster": "bootstrap-cluster", "bundle": "mgmt/generated/bootstrap-cluster-2024-04-16T14:48:21-05:00-bundle.yaml", "since": "2024-04-16T11:48:21.826-0500", "kubeconfig": "mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:48:22.029-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 support-bundle mgmt/generated/bootstrap-cluster-2024-04-16T14:48:21-05:00-bundle.yaml --kubeconfig mgmt/generated/mgmt.kind.kubeconfig --interactive=false --since-time 2024-04-16T11:48:21.826555142-05:00"}
+2024-04-16T14:48:26.347-0500	V0	Support bundle archive created	{"path": "support-bundle-2024-04-16T19_48_22.tar.gz"}
+2024-04-16T14:48:26.347-0500	V0	Analyzing support bundle	{"bundle": "mgmt/generated/bootstrap-cluster-2024-04-16T14:48:21-05:00-bundle.yaml", "archive": "support-bundle-2024-04-16T19_48_22.tar.gz"}
+2024-04-16T14:48:26.347-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 support-bundle analyze mgmt/generated/bootstrap-cluster-2024-04-16T14:48:21-05:00-bundle.yaml --bundle support-bundle-2024-04-16T19_48_22.tar.gz --output json"}
+2024-04-16T14:48:26.536-0500	V0	Analysis output generated	{"path": "mgmt/generated/bootstrap-cluster-2024-04-16T14:48:26-05:00-analysis.yaml"}
+2024-04-16T14:48:26.536-0500	V1	cleaning up temporary roles for diagnostic collectors
+2024-04-16T14:48:26.536-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:26.536-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl delete -f - --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:48:26.607-0500	V5	Retry execution successful	{"retries": 1, "duration": "70.626546ms"}
+2024-04-16T14:48:26.607-0500	V1	cleaning up temporary namespace  for diagnostic collectors	{"namespace": "eksa-diagnostics"}
+2024-04-16T14:48:26.607-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:26.607-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl delete namespace eksa-diagnostics --kubeconfig mgmt/generated/mgmt.kind.kubeconfig"}
+2024-04-16T14:48:31.852-0500	V5	Retry execution successful	{"retries": 1, "duration": "5.244976202s"}
+2024-04-16T14:48:31.852-0500	V0	collecting workload cluster diagnostics
+2024-04-16T14:48:31.859-0500	V3	bundle config written	{"path": "mgmt/generated/mgmt-2024-04-16T14:48:31-05:00-bundle.yaml"}
+2024-04-16T14:48:31.859-0500	V1	creating temporary namespace for diagnostic collector	{"namespace": "eksa-diagnostics"}
+2024-04-16T14:48:31.859-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:31.859-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl create namespace eksa-diagnostics --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:31.922-0500	V5	Retry execution successful	{"retries": 1, "duration": "63.206647ms"}
+2024-04-16T14:48:31.922-0500	V1	creating temporary ClusterRole and RoleBinding for diagnostic collector
+2024-04-16T14:48:31.922-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:31.922-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl apply -f - --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:32.258-0500	V5	Retry execution successful	{"retries": 1, "duration": "336.566572ms"}
+2024-04-16T14:48:32.258-0500	V0	⏳ Collecting support bundle from cluster, this can take a while	{"cluster": "mgmt", "bundle": "mgmt/generated/mgmt-2024-04-16T14:48:31-05:00-bundle.yaml", "since": "2024-04-16T11:48:31.859-0500", "kubeconfig": "mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:32.258-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 support-bundle mgmt/generated/mgmt-2024-04-16T14:48:31-05:00-bundle.yaml --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig --interactive=false --since-time 2024-04-16T11:48:31.859054533-05:00"}
+2024-04-16T14:48:34.614-0500	V0	Support bundle archive created	{"path": "support-bundle-2024-04-16T19_48_32.tar.gz"}
+2024-04-16T14:48:34.615-0500	V0	Analyzing support bundle	{"bundle": "mgmt/generated/mgmt-2024-04-16T14:48:31-05:00-bundle.yaml", "archive": "support-bundle-2024-04-16T19_48_32.tar.gz"}
+2024-04-16T14:48:34.615-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 support-bundle analyze mgmt/generated/mgmt-2024-04-16T14:48:31-05:00-bundle.yaml --bundle support-bundle-2024-04-16T19_48_32.tar.gz --output json"}
+2024-04-16T14:48:34.744-0500	V0	Analysis output generated	{"path": "mgmt/generated/mgmt-2024-04-16T14:48:34-05:00-analysis.yaml"}
+2024-04-16T14:48:34.744-0500	V1	cleaning up temporary roles for diagnostic collectors
+2024-04-16T14:48:34.744-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:34.744-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl delete -f - --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:34.815-0500	V5	Retry execution successful	{"retries": 1, "duration": "70.842323ms"}
+2024-04-16T14:48:34.815-0500	V1	cleaning up temporary namespace  for diagnostic collectors	{"namespace": "eksa-diagnostics"}
+2024-04-16T14:48:34.815-0500	V5	Retrier:	{"timeout": "2562047h47m16.854775807s", "backoffFactor": null}
+2024-04-16T14:48:34.815-0500	V6	Executing command	{"cmd": "/usr/bin/docker exec -i eksa_1713294802444417587 kubectl delete namespace eksa-diagnostics --kubeconfig mgmt/mgmt-eks-a-cluster.kubeconfig"}
+2024-04-16T14:48:39.964-0500	V5	Retry execution successful	{"retries": 1, "duration": "5.148737833s"}
+2024-04-16T14:48:39.964-0500	V4	Task finished	{"task_name": "collect-cluster-diagnostics", "duration": "18.144318935s"}
+2024-04-16T14:48:39.964-0500	V4	----------------------------------
+2024-04-16T14:48:39.964-0500	V4	Saving checkpoint	{"file": "mgmt-checkpoint.yaml"}
+2024-04-16T14:48:39.964-0500	V4	Tasks completed	{"duration": "35m9.181438195s"}
+2024-04-16T14:48:39.964-0500	V3	Cleaning up long running container	{"name": "eksa_1713294802444417587"}
+2024-04-16T14:48:39.964-0500	V6	Executing command	{"cmd": "/usr/bin/docker rm -f -v eksa_1713294802444417587"}
+Error: initializing capi resources in cluster: executing init: Fetching providers
+Using Override="core-components.yaml" Provider="cluster-api" Version="v1.6.1+fb85251"
+Using Override="bootstrap-components.yaml" Provider="bootstrap-kubeadm" Version="v1.6.1+c4d67c8"
+Using Override="bootstrap-components.yaml" Provider="bootstrap-etcdadm-bootstrap" Version="v1.0.10+7ed7a37"
+Using Override="bootstrap-components.yaml" Provider="bootstrap-etcdadm-controller" Version="v1.0.17+352a16c"
+Using Override="control-plane-components.yaml" Provider="control-plane-kubeadm" Version="v1.6.1+9ea461c"
+Using Override="infrastructure-components-development.yaml" Provider="infrastructure-docker" Version="v1.6.1+6275610"
+Installing cert-manager Version="v1.13.2+5862714"
+Using Override="cert-manager.yaml" Provider="cert-manager" Version="v1.13.2+5862714"
+Waiting for cert-manager to be available...
+Error: context deadline exceeded
+
+
